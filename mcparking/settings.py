@@ -10,6 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+
+import django_heroku
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,10 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!*$62))7esi+onv8uj!-ip5*edr1p14s44_h_d@v9(q&0r3eo)'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -80,16 +81,23 @@ WSGI_APPLICATION = 'mcparking.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME', 'db_mcparking2'),
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASS', '960898'),
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': os.environ.get('DB_NAME', 'db_mcparking2'),
+#        'USER': os.environ.get('DB_USER', 'postgres'),
+#        'PASSWORD': os.environ.get('DB_PASS', '960898'),
+#        'HOST': 'localhost',
+#        'PORT': '5432',
+#    }
+#}
+
+from dj_database_url import parse as dburl
+
+
+default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+DATABASES = {'default': config('DATABASE_URL', default=default_dburl, cast=dburl), }
+
 
 
 # Password validation
@@ -139,3 +147,5 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10
 }
+
+django_heroku.settings(locals())
