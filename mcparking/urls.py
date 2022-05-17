@@ -22,6 +22,7 @@ from veiculos.api.viewsets import VeiculosViewSet
 from vagas.api.viewsets import VagasViewSet
 from rest_framework.authtoken.views import obtain_auth_token
 
+
 router = routers.DefaultRouter()
 router.register(r'estacionamento', EstacionamentoViewSet, basename='Estacionamento')
 router.register(r'veiculos', VeiculosViewSet, basename='Veiculo')
