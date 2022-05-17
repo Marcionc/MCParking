@@ -92,11 +92,26 @@ WSGI_APPLICATION = 'mcparking.wsgi.application'
 #    }
 #}
 
-from dj_database_url import parse as dburl
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get("DB_NAME", "ddilmrjf0jpkhi"),
+        'USER': os.environ.get("DB_USER", "pgybpkijimvace"),
+        'PASSWORD': os.environ.get("DB_PASS", "d382c0ac9a5ba50df85762e2d9c401c9010f97058d2210ba979a2b6511bc61ea"),
+        'HOST': "ec2-54-204-56-171.compute-1.amazonaws.com",
+        'PORT': os.environ.get("DB_PORT", '5432'),
+        # 'TEST': {
+        #     'NAME': os.environ.get("DB_NAME", ""),
+        # }
+    }
+}
 
 
-default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
-DATABASES = {'default': config('DATABASE_URL', default=default_dburl, cast=dburl), }
+#from dj_database_url import parse as dburl
+
+
+#default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+#DATABASES = {'default': config('DATABASE_URL', default=default_dburl, cast=dburl), }
 
 
 
