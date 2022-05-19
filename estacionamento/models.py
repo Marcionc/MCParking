@@ -10,9 +10,11 @@ class Estacionamento(models.Model):
     vagas_livres_especiais = models.IntegerField('Vagas especiais livres')
     vagas_livres_comuns = models.IntegerField('Vagas comuns livres')
 
+
     class Meta:
         verbose_name_plural = 'Estacionamentos'
 
 
     def __str__(self):
         return self.nome
+

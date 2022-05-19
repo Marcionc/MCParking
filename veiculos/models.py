@@ -7,6 +7,7 @@ class Veiculos(models.Model):
     modelo = models.CharField('Modelo', max_length=50, null=False)
     cor = models.CharField('Cor', max_length=50, null=False)
     placa = models.CharField('Placa', max_length=8, null=False)
+    is_ativo = models.BooleanField('Está estacionado?', default=False)
     is_especial = models.BooleanField('Necessita vaga especial?', default=False)
     is_plan = models.BooleanField('Possui plano ativo?', default=False)
     data_entrada = models.DateTimeField(auto_now_add=True)
